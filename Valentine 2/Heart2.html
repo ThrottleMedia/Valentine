@@ -1,0 +1,185 @@
+<<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Will You Be My Valentine?</title>
+
+<style>
+body {
+    margin: 0;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom right, #ffd6e8, #fff0f5);
+    overflow: hidden;
+}
+
+h1 {
+    margin-top: 40px;
+    font-size: 38px;
+    color: #ff4d88;
+}
+
+#kitten {
+    width: 260px;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.buttons {
+    position: fixed;
+    bottom: 60px;
+    width: 100%;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    margin: 10px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#yesBtn {
+    background-color: #ff4d88;
+    color: white;
+}
+
+#noBtn {
+    background-color: #d9d9d9;
+    position: relative;
+}
+
+.blush {
+    background-color: #ffb6c1 !important;
+}
+
+.heart {
+    position: absolute;
+    font-size: 24px;
+    animation: floatUp 6s linear forwards;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(100vh); 
+
+opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="question">Will you be my Valentine? 💐</h1>
+
+<!-- DEFAULT CUTE KITTEN -->
+<img id="kitten"
+src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif"
+alt="Cute Kitten">
+
+<div class="buttons">
+    <button id="yesBtn" onclick="sayYes()">Yes 💖</button>
+    <button id="noBtn" onclick="sayNo()">No 💔
+
+</button>
+</div>
+
+<script>
+
+// SAD KITTENS (appear as No is clicked)
+let sadImages = [
+    "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
+];
+
+// HAPPY KITTEN (appears when Yes is clicked)
+let happyImage = "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif";
+
+// Messages shown when No is clicked
+let messages = [
+    "Are you sure? 🥺",
+    "Please think about it… 💔",
+
+    "Please say yes… 🌸",
+    "Don’t break my heart… 😿",
+    "Pleasssss say yes",
+    "YOU LEAVE ME NO OTHER OPTION"
+];
+
+let count = 0;
+let runAway = false;
+ let yesSize = 10;
+
+// FUNCTION: When No is clicked
+function sayNo() {
+    const noBtn = document.getElementById("noBtn");
+    const kitten = document.getElementById("kitten");
+
+    if (count < messages.length) {
+        noBtn.innerText = messages[count];
+        noBtn.classList.add("blush");
+
+        if (count < sadImages.length) {
+            kitten.src = sadImages[count];
+        }
+
+        count++;
+    } else {
+        runAway = true;
+    }
+
+    if (runAway) {
+        moveButton();
+    }
+}
+{yesSize += 35; 70;
+    document.getElementById("yesBtn").style.fontSize = yesSize + "px";
+}
+
+
+// FUNCTION: Move No button randomly (runs away)
+function moveButton() {
+    const btn = document.getElementById("noBtn");
+    const x = Math.random() * (window.innerWidth - 150);
+    const y = Math.random() * (window.innerHeight - 150);
+    btn.style.position = "absolute";
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+
+}
+
+// FUNCTION: When Yes is clicked
+function sayYes() {
+    document.getElementById("yesBtn").style.display = "none";
+    document.getElementById("noBtn").style.display = "none";
+
+    document.getElementById("question").innerHTML =
+    "💖 You just made my day and made me the happiest person in the world! 💖<br>🌹🌸💐";
+
+    document.getElementById("kitten").src = happyImage;
+
+    startHearts();
+
+}
+
+// FUNCTION: Start floating hearts
+function startHearts() {
+    setInterval(() => {
+        let heart = document.createElement("div");
+        heart.innerHTML = ["💖","💘","💝","🌸","🌹"][Math.floor(Math.random()*5)];
+        heart.className = "heart";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
+
+    }, 250);
+}
+
+</script>
+
+</body>
+</html>
